@@ -43,7 +43,7 @@ export default ProductDetailsScreen = (props) => {
 ProductDetailsScreen.navigationOptions = (navData) => {
   return {
     headerTitle: navData.navigation.getParam("productTitle"),
-    headerRight: (
+    headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
           title="Cart"

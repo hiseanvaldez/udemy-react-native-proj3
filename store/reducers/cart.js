@@ -12,7 +12,6 @@ export default (state = initialState, action) => {
       const addedProduct = action.product;
       const productPrice = addedProduct.price;
       const productTitle = addedProduct.title;
-
       let cartItem;
 
       if (state.items[addedProduct.id]) {
@@ -26,17 +25,34 @@ export default (state = initialState, action) => {
         cartItem = new CartItem(productTitle, productPrice, 1, productPrice);
       }
 
-      console.log(cartItem);
-
       return {
         items: { ...state.items, [addedProduct.id]: cartItem },
         totalAmount: state.totalAmount + productPrice,
       };
     }
     case REMOVE_FROM_CART: {
-      const removedProduct = action.product;
+      const item = state.items[action.productId];
+      const currentQty = state.items[action.productId].quantity;
+      let updatedCartItem;
 
-      return state;
+      if (currentQty > 1) {
+        const cartItem = new CartItem(
+          item.productTitle,
+          item.productPrice,
+          item.quantity - 1,
+          item.sum - item.productPrice
+        );
+        updatedCartItem = { ...state.items, [action.productId]: cartItem };
+      } else {
+        updatedCartItem = { ...state.items };
+        delete updatedCartItem[action.productId];
+      }
+
+      return {
+        ...state,
+        items: updatedCartItem,
+        totalAmount: state.totalAmount - item.productPrice,
+      };
     }
     default:
       return state;

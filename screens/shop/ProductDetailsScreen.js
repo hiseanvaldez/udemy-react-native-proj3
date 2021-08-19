@@ -8,7 +8,10 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+
 import Colors from "../../constants/Colors";
+import CustomHeaderButton from "../../components/common/HeaderButton";
 import { addToCart } from "../../store/actions/cart";
 
 export default ProductDetailsScreen = (props) => {
@@ -38,7 +41,20 @@ export default ProductDetailsScreen = (props) => {
 };
 
 ProductDetailsScreen.navigationOptions = (navData) => {
-  return { headerTitle: navData.navigation.getParam("productTitle") };
+  return {
+    headerTitle: navData.navigation.getParam("productTitle"),
+    headerRight: (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Cart"
+          iconName={"ios-cart"}
+          onPress={() => {
+            navData.navigation.navigate("Cart");
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({

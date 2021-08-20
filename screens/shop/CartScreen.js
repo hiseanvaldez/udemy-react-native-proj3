@@ -30,7 +30,9 @@ export default CartScreen = (props) => {
       <View style={styles.summaryContainer}>
         <Text style={styles.summaryText}>
           Total:{" "}
-          <Text style={styles.summaryAmount}>${totalAmount.toFixed(2)}</Text>
+          <Text style={styles.summaryAmount}>
+            ${Math.round(totalAmount.toFixed(2) * 100) / 100}
+          </Text>
         </Text>
         <Button
           color={Colors.accent}

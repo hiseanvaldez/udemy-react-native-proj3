@@ -13,10 +13,9 @@ export default UserProductsScreen = (props) => {
   const dispatch = useDispatch();
   const userProducts = useSelector((state) => state.products.userProducts);
 
-  const onSelectHandler = (id, title) => {
+  const onSelectHandler = (id) => {
     navigation.navigate("EditProduct", {
       productId: id,
-      productTitle: title,
     });
   };
 
@@ -29,14 +28,14 @@ export default UserProductsScreen = (props) => {
           title={itemData.item.title}
           price={itemData.item.price}
           onSelect={() => {
-            onSelectHandler(itemData.item.id, itemData.item.title);
+            onSelectHandler(itemData.item.id);
           }}
         >
           <Button
             title="Edit"
             color={Colors.primary}
             onPress={() => {
-              onSelectHandler(itemData.item.id, itemData.item.title);
+              onSelectHandler(itemData.item.id);
             }}
           />
           <Button
@@ -70,8 +69,10 @@ UserProductsScreen.navigationOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
           title="Add"
-          iconName={Platform.OS === "ios" ? "ios-add" : "md-add"}
-          onPress={() => {}}
+          iconName={Platform.OS === "ios" ? "ios-create" : "md-create"}
+          onPress={() => {
+            navData.navigation.navigate("EditProduct");
+          }}
         />
       </HeaderButtons>
     ),

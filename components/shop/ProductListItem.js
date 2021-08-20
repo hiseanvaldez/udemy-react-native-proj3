@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     alignItems: "center",
-    height: "15%",
+    height: "17%",
     padding: 10,
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: "25%",
+    height: "23%",
     paddingHorizontal: 20,
   },
   image: {

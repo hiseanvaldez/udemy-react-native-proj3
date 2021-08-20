@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Platform, StyleSheet, Button } from "react-native";
+import { FlatList, Platform, Button } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -79,5 +79,3 @@ ProductsOverviewScreen.navigationOptions = (navData) => {
     ),
   };
 };
-
-const styles = StyleSheet.create({});

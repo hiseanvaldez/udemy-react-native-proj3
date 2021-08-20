@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
   Platform,
+  Alert,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -27,19 +28,37 @@ export default EditProductScreen = (props) => {
   const [description, setDescription] = useState(
     product ? product.description : ""
   );
+  const [isTitleValid, setIsTitleValid] = useState(false);
 
   const submitHandler = useCallback(() => {
+    if (!isTitleValid) {
+      Alert.alert("Wrong Input", "Please check all fields.", [
+        { text: "Okay" },
+      ]);
+      return;
+    }
+
     if (product) {
       dispatch(updateProduct(productId, title, imageUrl, description));
     } else {
       dispatch(addProduct(title, imageUrl, +price, description));
     }
     navigation.goBack();
-  }, [dispatch, productId, title, imageUrl, price, description]);
+  }, [dispatch, productId, title, imageUrl, price, description, isTitleValid]);
 
   useEffect(() => {
     navigation.setParams({ submit: submitHandler });
   }, [submitHandler]);
+
+  const titleChangeHandler = (text) => {
+    if (text.trim().length === 0) {
+      setIsTitleValid(false);
+    } else {
+      setIsTitleValid(true);
+    }
+
+    setTitle(text);
+  };
 
   return (
     <ScrollView>
@@ -49,8 +68,14 @@ export default EditProductScreen = (props) => {
           <TextInput
             style={styles.input}
             value={title}
-            onChangeText={(text) => setTitle(text)}
+            onChangeText={(text) => titleChangeHandler(text)}
+            autoCapitalize="words"
+            autoCorrect
+            returnKeyType="next"
           />
+          {!isTitleValid && (
+            <Text style={styles.warningText}>Please enter a valid title</Text>
+          )}
         </View>
         <View style={styles.formControl}>
           <Text style={styles.label}>Image URL:</Text>
@@ -58,6 +83,7 @@ export default EditProductScreen = (props) => {
             style={styles.input}
             value={imageUrl}
             onChangeText={(text) => setImageUrl(text)}
+            returnKeyType="next"
           />
         </View>
         {product ? null : (
@@ -67,6 +93,8 @@ export default EditProductScreen = (props) => {
               style={styles.input}
               value={price}
               onChangeText={(text) => setPrice(text)}
+              keyboardType="decimal-pad"
+              returnKeyType="next"
             />
           </View>
         )}
@@ -76,6 +104,8 @@ export default EditProductScreen = (props) => {
             style={styles.input}
             value={description}
             onChangeText={(text) => setDescription(text)}
+            autoCorrect
+            returnKeyType="next"
           />
         </View>
       </View>

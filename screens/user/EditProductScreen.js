@@ -34,6 +34,7 @@ export default EditProductScreen = (props) => {
     } else {
       dispatch(addProduct(title, imageUrl, +price, description));
     }
+    navigation.goBack();
   }, [dispatch, productId, title, imageUrl, price, description]);
 
   useEffect(() => {

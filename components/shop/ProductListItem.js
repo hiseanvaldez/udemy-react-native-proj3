@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Card from "../common/Card";
 
 export default ProductListItem = (props) => {
   let TouchableCmp = TouchableOpacity;
@@ -17,7 +18,7 @@ export default ProductListItem = (props) => {
   }
 
   return (
-    <View style={styles.productContainer}>
+    <Card style={styles.productContainer}>
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
@@ -30,19 +31,12 @@ export default ProductListItem = (props) => {
           </View>
         </TouchableCmp>
       </View>
-    </View>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
   productContainer: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "white",
     height: 300,
     margin: 20,
   },

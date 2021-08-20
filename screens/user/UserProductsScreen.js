@@ -1,14 +1,16 @@
 import React from "react";
 import { FlatList, Button } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import CustomHeaderButton from "../../components/common/HeaderButton";
 import ProductListItem from "../../components/shop/ProductListItem";
 import Colors from "../../constants/Colors";
+import { deleteProduct } from "../../store/actions/products";
 
 export default UserProductsScreen = (props) => {
   const { navigation } = props;
+  const dispatch = useDispatch();
   const userProducts = useSelector((state) => state.products.userProducts);
 
   const onSelectHandler = (id, title) => {
@@ -31,13 +33,19 @@ export default UserProductsScreen = (props) => {
           }}
         >
           <Button
-            title="Edit Details"
+            title="Edit"
             color={Colors.primary}
             onPress={() => {
               onSelectHandler(itemData.item.id, itemData.item.title);
             }}
           />
-          <Button title="Delete" color={Colors.primary} onPress={() => {}} />
+          <Button
+            title="Delete"
+            color={Colors.primary}
+            onPress={() => {
+              dispatch(deleteProduct(itemData.item.id));
+            }}
+          />
         </ProductListItem>
       )}
     />
@@ -55,6 +63,15 @@ UserProductsScreen.navigationOptions = (navData) => {
           onPress={() => {
             navData.navigation.toggleDrawer();
           }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Add"
+          iconName={Platform.OS === "ios" ? "ios-add" : "md-add"}
+          onPress={() => {}}
         />
       </HeaderButtons>
     ),

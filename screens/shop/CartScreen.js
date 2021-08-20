@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import CartListItem from "../../components/shop/CartListItem";
 import Colors from "../../constants/Colors";
-import { clearCart, removeFromCart } from "../../store/actions/cart";
+import { removeFromCart } from "../../store/actions/cart";
 import { addOrder } from "../../store/actions/order";
 
 export default CartScreen = (props) => {
@@ -38,7 +38,6 @@ export default CartScreen = (props) => {
           disabled={cartItems.length === 0}
           onPress={() => {
             dispatch(addOrder(cartItems, totalAmount));
-            dispatch(clearCart());
           }}
         />
       </View>
@@ -50,6 +49,7 @@ export default CartScreen = (props) => {
             quantity={itemData.item.quantity}
             title={itemData.item.productTitle}
             amount={itemData.item.sum}
+            deletable
             onRemove={() => {
               dispatch(removeFromCart(itemData.item.productId));
             }}

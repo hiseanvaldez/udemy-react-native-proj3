@@ -10,27 +10,32 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default CartListItem = (props) => {
   return (
-    <View style={styles.card}>
+    <View style={styles.cartContainer}>
       <View style={styles.itemData}>
         <Text style={styles.quantity}>{props.quantity} </Text>
         <Text style={styles.mainText}>{props.title}</Text>
       </View>
       <View style={styles.itemData}>
         <Text style={styles.mainText}>${props.amount.toFixed(2)}</Text>
-        <TouchableOpacity onPress={props.onRemove} style={styles.deleteButton}>
-          <Ionicons
-            name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
-            size={23}
-            color="#d13030"
-          />
-        </TouchableOpacity>
+        {props.deletable && (
+          <TouchableOpacity
+            onPress={props.onRemove}
+            style={styles.deleteButton}
+          >
+            <Ionicons
+              name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
+              size={23}
+              color="#d13030"
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
+  cartContainer: {
     padding: 10,
     backgroundColor: "white",
     flexDirection: "row",

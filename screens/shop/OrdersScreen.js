@@ -4,17 +4,22 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 
 import CustomHeaderButton from "../../components/common/HeaderButton";
+import OrderListItem from "../../components/shop/OrderListItem";
 
 export default OrdersScreen = (props) => {
   const orders = useSelector((state) => state.orders.orders);
-
-  console.log(orders);
 
   return (
     <FlatList
       data={orders}
       keyExtractor={(item) => item.id}
-      renderItem={(itemData) => <Text>{itemData.item.totalAmount}</Text>}
+      renderItem={(itemData) => (
+        <OrderListItem
+          items={itemData.item.items}
+          amount={itemData.item.totalAmount}
+          date={itemData.item.readableDate}
+        />
+      )}
     />
   );
 };

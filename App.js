@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
+import { combineReducers, createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import * as Font from "expo-font";
+import thunk from "redux-thunk";
 
 import ShopNavigator from "./navigation/ShopNavigator";
 import productReducer from "./store/reducers/products";
@@ -15,7 +16,10 @@ const rootReducer = combineReducers({
   orders: ordersReducer,
   cart: cartReducer,
 });
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 const fetchFonts = () => {
   return Font.loadAsync({

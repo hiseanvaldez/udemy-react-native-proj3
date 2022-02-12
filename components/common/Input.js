@@ -31,7 +31,6 @@ export default Input = (props) => {
   const { onInputChange, id } = props;
 
   useEffect(() => {
-    console.log(inputState.touched);
     if (inputState.touched) {
       onInputChange(id, inputState.value, inputState.isValid);
     }
@@ -61,7 +60,6 @@ export default Input = (props) => {
   };
 
   const lostFocusHandler = () => {
-    console.log("ONBLURE CALLED");
     dispatch({ type: INPUT_BLUR });
   };
 
@@ -76,8 +74,10 @@ export default Input = (props) => {
         onBlur={lostFocusHandler}
         on
       />
-      {!inputState.isValid && (
-        <Text style={styles.warningText}>{props.errorText}</Text>
+      {!inputState.isValid && inputState.touched && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.warningText}>{props.errorText}</Text>
+        </View>
       )}
     </View>
   );
@@ -94,5 +94,13 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
+  },
+  errorContainer: {
+    marginVertical: 5,
+  },
+  warningText: {
+    fontFamily: "open-sans",
+    color: "red",
+    fontSize: 14,
   },
 });

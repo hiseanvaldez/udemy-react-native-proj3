@@ -21,24 +21,14 @@ const inputReducer = (state, action) => {
   }
 };
 
-export default Input = ({
-  id,
-  label,
-  email,
-  min,
-  max,
-  minLength,
-  initialValue,
-  isInitiallyValid,
-  onInputChange,
-  required,
-  errorText,
-}) => {
+export default Input = (props) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: initialValue ? initialValue : "",
-    isValid: isInitiallyValid,
+    value: props.initialValue ? props.initialValue : "",
+    isValid: props.isInitiallyValid,
     touched: false,
   });
+
+  const { onInputChange, id } = props;
 
   useEffect(() => {
     if (inputState.touched) {
@@ -50,19 +40,19 @@ export default Input = ({
     const emailRegex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let isValid = true;
-    if (required && text.trim().length === 0) {
+    if (props.required && text.trim().length === 0) {
       isValid = false;
     }
-    if (email && !emailRegex.test(text.toLowerCase())) {
+    if (props.email && !emailRegex.test(text.toLowerCase())) {
       isValid = false;
     }
-    if (min != null && +text < min) {
+    if (props.min != null && +text < props.min) {
       isValid = false;
     }
-    if (max != null && +text > max) {
+    if (props.max != null && +text > props.max) {
       isValid = false;
     }
-    if (minLength != null && text.length < minLength) {
+    if (props.minLength != null && text.length < props.minLength) {
       isValid = false;
     }
 
@@ -75,8 +65,9 @@ export default Input = ({
 
   return (
     <View style={styles.formControl}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={styles.label}>{props.label}</Text>
       <TextInput
+        {...props}
         style={styles.input}
         value={inputState.value}
         onChangeText={textChangeHandler}
@@ -85,7 +76,7 @@ export default Input = ({
       />
       {!inputState.isValid && inputState.touched && (
         <View style={styles.errorContainer}>
-          <Text style={styles.warningText}>{errorText}</Text>
+          <Text style={styles.warningText}>{props.errorText}</Text>
         </View>
       )}
     </View>

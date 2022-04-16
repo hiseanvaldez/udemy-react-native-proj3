@@ -5,12 +5,12 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import * as Font from "expo-font";
 import thunk from "redux-thunk";
 
-import ShopNavigator from "./navigation/ShopNavigator";
 import productReducer from "./store/reducers/products";
 import cartReducer from "./store/reducers/cart";
 import ordersReducer from "./store/reducers/order";
 import authReducer from "./store/reducers/auth";
 import AppLoading from "expo-app-loading";
+import NavigationContainer from "./navigation/NavigationContainer";
 
 const rootReducer = combineReducers({
   products: productReducer,
@@ -45,7 +45,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <ShopNavigator />
+      <NavigationContainer />
     </Provider>
   );
 }

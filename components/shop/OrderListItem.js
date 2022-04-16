@@ -4,14 +4,14 @@ import Colors from "../../constants/Colors";
 import Card from "../common/Card";
 import CartListItem from "./CartListItem";
 
-export default OrderListItem = (props) => {
+export default OrderListItem = ({ amount, date, items }) => {
   const [isDetailsShown, setIsShownDetails] = useState(false);
 
   return (
-    <Card style={styles.orderContainer}>
+    <Card cardStyle={styles.orderContainer}>
       <View style={styles.summary}>
-        <Text style={styles.amount}>${props.amount.toFixed(2)}</Text>
-        <Text style={styles.date}>{props.date}</Text>
+        <Text style={styles.amount}>${amount.toFixed(2)}</Text>
+        <Text style={styles.date}>{date}</Text>
       </View>
       <Button
         title={isDetailsShown ? "Hide Details" : "Show Details"}
@@ -22,7 +22,7 @@ export default OrderListItem = (props) => {
       />
       {isDetailsShown && (
         <View style={styles.itemContainer}>
-          {props.items.map((cartItem) => (
+          {items.map((cartItem) => (
             <CartListItem
               key={cartItem.productId}
               title={cartItem.productTitle}

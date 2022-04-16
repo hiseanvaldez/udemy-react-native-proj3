@@ -54,7 +54,7 @@ export default CartScreen = () => {
 
   return (
     <View style={styles.screen}>
-      <Card style={styles.summaryContainer}>
+      <Card cardStyle={styles.summaryContainer}>
         <Text style={styles.summaryText}>
           Total:{" "}
           <Text style={styles.summaryAmount}>

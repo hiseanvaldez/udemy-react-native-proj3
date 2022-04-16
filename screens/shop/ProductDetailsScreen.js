@@ -14,8 +14,7 @@ import Colors from "../../constants/Colors";
 import CustomHeaderButton from "../../components/common/HeaderButton";
 import { addToCart } from "../../store/actions/cart";
 
-export default ProductDetailsScreen = (props) => {
-  const { navigation } = props;
+export default ProductDetailsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const productId = navigation.getParam("productId");
   const product = useSelector((state) =>

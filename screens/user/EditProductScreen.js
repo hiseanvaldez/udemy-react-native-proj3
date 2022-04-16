@@ -44,8 +44,7 @@ const formReducer = (state, action) => {
   return state;
 };
 
-export default EditProductScreen = (props) => {
-  const { navigation } = props;
+export default EditProductScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const productId = navigation.getParam("productId");
   const product = useSelector((state) =>

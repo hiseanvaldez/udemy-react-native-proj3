@@ -8,8 +8,7 @@ import ProductListItem from "../../components/shop/ProductListItem";
 import Colors from "../../constants/Colors";
 import { deleteProduct } from "../../store/actions/products";
 
-export default UserProductsScreen = (props) => {
-  const { navigation } = props;
+export default UserProductsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const userProducts = useSelector((state) => state.products.userProducts);
 

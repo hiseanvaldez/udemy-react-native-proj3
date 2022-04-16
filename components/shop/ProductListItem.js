@@ -10,7 +10,13 @@ import {
 } from "react-native";
 import Card from "../common/Card";
 
-export default ProductListItem = (props) => {
+export default ProductListItem = ({
+  title,
+  image,
+  price,
+  onSelect,
+  children,
+}) => {
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === "android" && Platform.Version >= 21) {
@@ -18,16 +24,16 @@ export default ProductListItem = (props) => {
   }
 
   return (
-    <Card style={styles.productContainer}>
+    <Card cardStyle={styles.productContainer}>
       <View style={styles.touchable}>
-        <TouchableCmp onPress={props.onSelect} useForeground>
+        <TouchableCmp onPress={onSelect} useForeground>
           <View>
-            <Image source={{ uri: props.image }} style={styles.image} />
+            <Image source={{ uri: image }} style={styles.image} />
             <View style={styles.detailsContainer}>
-              <Text style={styles.title}>{props.title}</Text>
-              <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+              <Text style={styles.title}>{title}</Text>
+              <Text style={styles.price}>$ {price?.toFixed(2)}</Text>
             </View>
-            <View style={styles.buttonContainer}>{props.children}</View>
+            <View style={styles.buttonContainer}>{children}</View>
           </View>
         </TouchableCmp>
       </View>

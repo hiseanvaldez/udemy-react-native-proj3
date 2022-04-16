@@ -14,7 +14,7 @@ import OrderListItem from "../../components/shop/OrderListItem";
 import Colors from "../../constants/Colors";
 import { fetchOrders } from "../../store/actions/order";
 
-export default OrdersScreen = (props) => {
+export default OrdersScreen = () => {
   const orders = useSelector((state) => state.orders.orders);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);

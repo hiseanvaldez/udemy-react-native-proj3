@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
     }
     case ADD_PRODUCT: {
       const newProduct = new Product(
-        action.productDatam.id,
+        action.productData.id,
         "u1",
         action.productData.title,
         action.productData.imageUrl,

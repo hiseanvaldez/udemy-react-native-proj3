@@ -24,7 +24,7 @@ export const fetchProducts = () => {
         products.push(
           new Product(
             key,
-            userId,
+            resData[key].ownerId,
             resData[key].title,
             resData[key].imageUrl,
             resData[key].description,
@@ -33,7 +33,11 @@ export const fetchProducts = () => {
         );
       }
 
-      dispatch({ type: SET_PRODUCTS, products: products, userId });
+      dispatch({
+        type: SET_PRODUCTS,
+        products: products,
+        userProducts: products.filter((prod) => prod.ownerId === userId),
+      });
     } catch (err) {
       throw err;
     }
@@ -78,6 +82,7 @@ export const addProduct = (title, imageUrl, price, description) => {
           description,
           imageUrl,
           price,
+          ownerId: userId,
         }),
       }
     );

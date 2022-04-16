@@ -16,9 +16,7 @@ export default (state = initialState, action) => {
     case SET_PRODUCTS: {
       return {
         availableProducts: action.products,
-        userProducts: action.products.filter(
-          (prod) => prod.ownerId === action.userId
-        ),
+        userProducts: action.userProducts,
       };
     }
     case DELETE_PRODUCT: {

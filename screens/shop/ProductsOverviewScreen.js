@@ -17,15 +17,19 @@ import Colors from "../../constants/Colors";
 import { addToCart } from "../../store/actions/cart";
 import { fetchProducts } from "../../store/actions/products";
 
-export default ProductsOverviewScreen = (props) => {
-  const { navigation } = props;
-  const dispatch = useDispatch();
+export default ProductsOverviewScreen = ({ navigation }) => {
   const products = useSelector((state) => state.products.availableProducts);
+
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
 
   useEffect(() => {
-    loadProducts();
+    setIsLoading(true);
+    loadProducts().then(() => {
+      setIsLoading(false);
+    });
   }, [dispatch, loadProducts]);
 
   useEffect(() => {
@@ -40,15 +44,15 @@ export default ProductsOverviewScreen = (props) => {
   }, [loadProducts]);
 
   const loadProducts = useCallback(async () => {
-    setIsLoading(true);
     setError(null);
+    setIsRefreshing(true);
     try {
       await dispatch(fetchProducts());
     } catch (err) {
       setError(err.message);
     }
-    setIsLoading(false);
-  }, [dispatch, setIsLoading, setError]);
+    setIsRefreshing(false);
+  }, [dispatch, setIsRefreshing, setError]);
 
   const selectItemHandler = (id, title) => {
     navigation.navigate("ProductDetails", {
@@ -90,6 +94,8 @@ export default ProductsOverviewScreen = (props) => {
   return (
     <FlatList
       data={products}
+      onRefresh={loadProducts}
+      refreshing={isRefreshing}
       renderItem={(itemData) => (
         <ProductListItem
           image={itemData.item.imageUrl}

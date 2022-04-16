@@ -15,7 +15,7 @@ import Colors from "../../constants/Colors";
 import { removeFromCart } from "../../store/actions/cart";
 import { addOrder } from "../../store/actions/order";
 
-export default CartScreen = (props) => {
+export default CartScreen = () => {
   const dispatch = useDispatch();
   const totalAmount = useSelector((state) => state.cart.totalAmount);
   const [isLoading, setIsLoading] = useState(false);

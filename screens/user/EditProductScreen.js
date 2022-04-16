@@ -52,7 +52,7 @@ export default EditProductScreen = (props) => {
     state.products.userProducts.find((prod) => prod.id === productId)
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
@@ -134,7 +134,7 @@ export default EditProductScreen = (props) => {
   if (isLoading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator color={Colors.primary} />
+        <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     );
   }

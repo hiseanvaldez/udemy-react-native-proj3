@@ -4,10 +4,12 @@ export const ADD_ORDER = "ADD_ORDER";
 export const SET_ORDERS = "SET_ORDERS";
 
 export const addOrder = (cartItems, totalAmount) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     const date = new Date();
+    const { userId, token } = getState().auth;
+
     const response = await fetch(
-      "https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/orders/u1.json",
+      `https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${userId}.json?auth=${token}`,
       {
         method: "POST",
         headers: {
@@ -40,10 +42,12 @@ export const addOrder = (cartItems, totalAmount) => {
 };
 
 export const fetchOrders = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const auth = getState().auth;
+
     try {
       const response = await fetch(
-        "https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/orders/u1.json"
+        `https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/orders/${auth.userId}.json`
       );
 
       if (!response.ok) {

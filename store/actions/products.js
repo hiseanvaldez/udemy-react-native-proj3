@@ -6,7 +6,9 @@ export const ADD_PRODUCT = "ADD_PRODUCT";
 export const SET_PRODUCTS = "SET_PRODUCTS";
 
 export const fetchProducts = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { userId } = getState().auth;
+
     try {
       const response = await fetch(
         "https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/products.json"
@@ -22,7 +24,7 @@ export const fetchProducts = () => {
         products.push(
           new Product(
             key,
-            "u1",
+            userId,
             resData[key].title,
             resData[key].imageUrl,
             resData[key].description,
@@ -31,7 +33,7 @@ export const fetchProducts = () => {
         );
       }
 
-      dispatch({ type: SET_PRODUCTS, products: products });
+      dispatch({ type: SET_PRODUCTS, products: products, userId });
     } catch (err) {
       throw err;
     }
@@ -39,9 +41,11 @@ export const fetchProducts = () => {
 };
 
 export const deleteProduct = (productId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { token } = getState().auth;
+
     const response = await fetch(
-      `https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId}.json`,
+      `https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId}.json?auth=${token}`,
       {
         method: "DELETE",
       }
@@ -59,9 +63,11 @@ export const deleteProduct = (productId) => {
 };
 
 export const addProduct = (title, imageUrl, price, description) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { userId, token } = getState().auth;
+
     const response = await fetch(
-      "https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/products.json",
+      `https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=${token}`,
       {
         method: "POST",
         headers: {
@@ -90,15 +96,18 @@ export const addProduct = (title, imageUrl, price, description) => {
         imageUrl,
         price,
         description,
+        userId,
       },
     });
   };
 };
 
 export const updateProduct = (productId, title, imageUrl, description) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { token } = getState().auth;
+
     const response = await fetch(
-      `https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId}.json`,
+      `https://udemy-reactnative-8c58e-default-rtdb.asia-southeast1.firebasedatabase.app/products/${productId}.json?auth=${token}`,
       {
         method: "PATCH",
         headers: {
